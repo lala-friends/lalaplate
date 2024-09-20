@@ -1,0 +1,56 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  output:
+    ansi:
+      enabled: always
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: sa
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    open-in-view: false
+    generate-ddl: true
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+      path: /h2-console
+
+  task:
+    execution:
+      thread-name-prefix: Async-
+      pool:
+        max-size: 16
+        queue-capacity: 50
+        keep-alive: 1s
+
+  config:
+    activate:
+      on-profile: test
+de:
+  flapdoodle:
+    mongodb:
+      embedded:
+        version: 5.0.5
+
+
+app:
+  crypto-key:
+    attribute-encrypt-key: xf6sDkpae4cYeR3YJn0VJQ8bRbvqLohx
+    iv: jHcGcPePw95wiXcANyb8FGfvjDOGTPQB
+
+  client:
+    payment:
+      host: http://localhost:8090
+      timeout: 2
+      logging: true
+      use-dummy: true
+    ex-rate:
+      host: https://open.er-api.com/
+      timeout: 2
+      logging: true
+      use-dummy: false

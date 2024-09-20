@@ -1,0 +1,19 @@
+### /v1/hello
+GET {{host}}/v1/hello
+content-type: application/json
+
+### /v1/hello-redis
+GET {{host}}/v1/hello-redis
+content-type: application/json
+
+### /v1/hello-mongo
+GET {{host}}/v1/hello-mongo
+
+### /v1/hello-jpa
+GET {{host}}/v1/hello-jpa
+
+### /v1/hello-ex-rate
+GET {{host}}/v1/hello-ex-rate
+
+### /v1/-hello-error
+GET {{host}}/v1/hello-error
