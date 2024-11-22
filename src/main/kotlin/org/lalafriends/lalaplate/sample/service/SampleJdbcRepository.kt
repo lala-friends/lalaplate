@@ -1,7 +1,7 @@
 package org.lalafriends.lalaplate.sample.service
 
-import org.lalafriends.lalaplate.sample.Sample
+import org.lalafriends.lalaplate.sample.persistence.SampleEntity
 
 interface SampleJdbcRepository {
-    fun save(sample: Sample): Sample
+    fun save(sample: SampleEntity): SampleEntity
 }
