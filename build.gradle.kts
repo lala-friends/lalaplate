@@ -77,12 +77,6 @@ dependencies {
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 }
 
-allOpen {
-    annotation("jakarta.persistence.Entity")
-    annotation("jakarta.persistence.MappedSuperclass")
-    annotation("jakarta.persistence.Embeddable")
-}
-
 noArg {
     invokeInitializers = true
 }
