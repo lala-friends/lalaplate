@@ -1,4 +1,4 @@
-package org.lalafriends.lalaplate.sample.application.service
+package org.lalafriends.lalaplate.sample.application.port.outbound
 
 import org.lalafriends.lalaplate.sample.adaptor.outbound.persistence.mongo.SampleDocument
 

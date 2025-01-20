@@ -1,9 +1,11 @@
-package org.lalafriends.lalaplate.sample.service
+package org.lalafriends.lalaplate.sample.application.service
 
 import org.lalafriends.lalaplate.common.config.client.exrate.ExRateClient
-import org.lalafriends.lalaplate.sample.adaptor.outbound.persistence.jpa.Sample
+import org.lalafriends.lalaplate.sample.adaptor.outbound.persistence.jpa.SampleEntity
 import org.lalafriends.lalaplate.sample.adaptor.outbound.persistence.mongo.SampleDocument
 import org.lalafriends.lalaplate.sample.adaptor.outbound.persistence.redis.SampleRedisKey
+import org.lalafriends.lalaplate.sample.application.port.outbound.SampleDocumentRepository
+import org.lalafriends.lalaplate.sample.application.port.outbound.SampleJdbcRepository
 import org.slf4j.LoggerFactory
 import org.springframework.data.redis.core.StringRedisTemplate
 import org.springframework.stereotype.Service
@@ -34,7 +36,7 @@ class SampleService(
     }
 
     fun helloJpa(): Long {
-        val sample = Sample("Hello, jdbc!")
+        val sample = SampleEntity("Hello, jdbc!")
         sampleJdbcRepository.save(sample)
         log.info("Created sample - ${sample.id}")
         return sample.id!!
