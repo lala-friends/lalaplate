@@ -1,6 +1,6 @@
 package org.lalafriends.lalaplate
 
-import org.lalafriends.lalaplate.config.AppEnv
+import org.lalafriends.lalaplate.common.config.AppEnv
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.runApplication

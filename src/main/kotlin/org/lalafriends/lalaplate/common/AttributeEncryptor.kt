@@ -2,7 +2,7 @@ package org.lalafriends.lalaplate.common
 
 import jakarta.persistence.AttributeConverter
 import jakarta.persistence.Converter
-import org.lalafriends.lalaplate.config.AppEnv
+import org.lalafriends.lalaplate.common.config.AppEnv
 import org.springframework.stereotype.Component
 
 @Converter
