@@ -55,20 +55,29 @@ def save_to_file(content, filename):
         f.write(content)
 
 # PR 코멘트 등록
-def post_comment(pr_number, filename):
+def post_comment(filename):
     try:
-        if not pr_number:
-            raise ValueError("PR_NUMBER is not set or invalid.")
-        print(f"Running command: gh pr comment {pr_number} -F {filename}")
-        subprocess.run(["gh", "pr", "comment", str(pr_number), "-F", filename], check=True)
+        result = subprocess.run(
+            ["gh", "pr", "comment", "-F", filename],
+            check=True,
+            capture_output=True,
+            text=True
+        )
+        print("✅ GitHub PR 코멘트 등록 성공:")
+        print(result.stdout)
     except subprocess.CalledProcessError as e:
-        print(f"❌ Failed to post comment: {e}")
-        raise
-    except ValueError as e:
-        print(f"❌ {e}")
-        raise
+        print("❌ GitHub PR 코멘트 등록 실패:")
+        print(e.stderr)
+
+def check_env_vars():
+    print("🔎 환경 변수 확인:")
+    for key in ["OPENAI_API_KEY", "GITHUB_TOKEN", "GITHUB_REPOSITORY", "PR_NUMBER"]:
+        val = os.getenv(key)
+        print(f"{key}: {'✅ OK' if val else '❌ MISSING'}")
 
 def main():
+    check_env_vars()
+
     if not all([OPENAI_API_KEY, GITHUB_TOKEN, GITHUB_REPOSITORY, PR_NUMBER]):
         print("❌ 필수 환경 변수가 누락되었습니다.")
         return
