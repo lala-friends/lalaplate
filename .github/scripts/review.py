@@ -98,7 +98,7 @@ def main():
     save_to_file(review, OUTPUT_FILE)
 
     print("📤 PR에 댓글 등록 중...")
-    post_comment(PR_NUMBER, OUTPUT_FILE)
+    post_comment(OUTPUT_FILE)
 
     print("✅ 완료: 리뷰가 PR에 성공적으로 등록되었습니다.")
 
