@@ -9,26 +9,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 코드 체크아웃
+      - name: 📥 Checkout repository
         uses: actions/checkout@v3
 
-      - name: 🐍 Python 설치
+      - name: 🐍 Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.10"
 
-      - name: 📦 Python 의존성 설치
+      - name: 📦 Install Python dependencies
         run: pip install openai requests
 
-      - name: 🛠 GitHub CLI 설치
+      - name: 🛠 Install GitHub CLI
         run: |
           sudo apt-get update
           sudo apt-get install -y gh
 
-      - name: 🔐 GitHub CLI 인증
-        run: gh auth login --with-token "${{ secrets.GITHUB_TOKEN }}"
+      - name: 🔐 Authenticate GitHub CLI with PAT
+        run: echo "${{ secrets.MY_PAT }}" | gh auth login --with-token
+        env:
+          GITHUB_TOKEN: ""  # ❗ GITHUB_TOKEN 비워야 gh가 PAT 사용
+          MY_PAT: ${{ secrets.MY_PERSONAL_ACCESS_TOKEN }}
 
-      - name: 🤖 GPT 기반 코드 리뷰 실행
+      - name: 🤖 Run AI Code Review (no arguments!)
         run: python .github/scripts/review.py
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
