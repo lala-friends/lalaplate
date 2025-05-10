@@ -1,11 +1,11 @@
-코드 리뷰 대상 : #{pr_number} "{pr_title}"
+PR 번호 : #{pr_number}
+
+PR 제목 : {pr_title}
 
 PR 설명: {pr_description}
 
 변경 내용:
-```diff
 {diff_content}
-```
 
 1. 잠재적 버그나 이슈 존재 여부
 2. 성능 최적화 제안
