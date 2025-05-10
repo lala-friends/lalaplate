@@ -104,7 +104,7 @@ def main():
     print("📤 PR에 댓글 등록 중...")
     post_comment(OUTPUT_FILE)
 
-    print("✅ 완료: 리뷰가 PR에 성공적으로 등록되었습니다!!")
+    print("✅ 완료: 리뷰가 PR에 성공적으로 등록되었습니다!!!")
 
 if __name__ == "__main__":
     main()
