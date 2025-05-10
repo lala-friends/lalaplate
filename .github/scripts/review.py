@@ -25,7 +25,11 @@ def get_pr_info(repo, pr_number, token):
 
 # 코드 변경사항(diff) 가져오기
 def get_diff():
-    return subprocess.check_output(["git", "diff", "origin/main...HEAD"], text=True)
+    try:
+        return subprocess.check_output(["git", "diff", "origin/main...HEAD"], text=True)
+    except subprocess.CalledProcessError:
+        print("❌ Unable to fetch diff with 'origin/main'. Ensure the 'main' branch exists and is up to date.")
+        return ""
 
 # 프롬프트 템플릿 로딩 후 변수 치환
 def load_and_fill_prompt(pr_number, pr_title, pr_desc, diff_content):
