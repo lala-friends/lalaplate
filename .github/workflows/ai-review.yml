@@ -9,28 +9,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 코드 체크아웃
+      - name: 🧭 Checkout PR branch
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0  # ✅ 전체 히스토리를 가져와야 origin/main 과 비교 가능
 
-      - name: 🐍 Python 설치
+      - name: 🐍 Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.10"
 
-      - name: 📦 Python 의존성 설치
-        run: pip install openai requests
+      - name: 📦 Install Python dependencies
+        run: pip install openai==0.28 requests
 
-      - name: 🛠 GitHub CLI 설치
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y gh
+      - name: 🛠 Install GitHub CLI
+        run: sudo apt-get install -y gh
 
-      - name: 🔐 GitHub CLI 인증
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: 🤖 GPT 기반 코드 리뷰 실행
+      - name: 🤖 Run AI Code Review
         run: python .github/scripts/review.py
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
@@ -38,3 +34,4 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
           PROMPT_TEMPLATE_FILE: .github/scripts/review_prompt_template.txt
+          GH_TOKEN: ${{ secrets.MY_PAT }}

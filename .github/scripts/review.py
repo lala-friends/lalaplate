@@ -25,7 +25,12 @@ def get_pr_info(repo, pr_number, token):
 
 # 코드 변경사항(diff) 가져오기
 def get_diff():
-    return subprocess.check_output(["git", "diff", "origin/main...HEAD"], text=True)
+    try:
+        subprocess.run(["git", "fetch", "origin", "main"], check=True)
+        return subprocess.check_output(["git", "diff", "origin/main...HEAD"], text=True)
+    except subprocess.CalledProcessError:
+        print("❌ Unable to fetch diff with 'origin/main'. Ensure the 'main' branch exists and is up to date.")
+        return ""
 
 # 프롬프트 템플릿 로딩 후 변수 치환
 def load_and_fill_prompt(pr_number, pr_title, pr_desc, diff_content):
@@ -55,10 +60,29 @@ def save_to_file(content, filename):
         f.write(content)
 
 # PR 코멘트 등록
-def post_comment(pr_number, filename):
-    subprocess.run(["gh", "pr", "comment", str(pr_number), "-F", filename], check=True)
+def post_comment(filename):
+    try:
+        result = subprocess.run(
+            ["gh", "pr", "comment", "-F", filename],
+            check=True,
+            capture_output=True,
+            text=True
+        )
+        print("✅ GitHub PR 코멘트 등록 성공:")
+        print(result.stdout)
+    except subprocess.CalledProcessError as e:
+        print("❌ GitHub PR 코멘트 등록 실패:")
+        print(e.stderr)
+
+def check_env_vars():
+    print("🔎 환경 변수 확인:")
+    for key in ["OPENAI_API_KEY", "GITHUB_TOKEN", "GITHUB_REPOSITORY", "PR_NUMBER"]:
+        val = os.getenv(key)
+        print(f"{key}: {'✅ OK' if val else '❌ MISSING'}")
 
 def main():
+    check_env_vars()
+
     if not all([OPENAI_API_KEY, GITHUB_TOKEN, GITHUB_REPOSITORY, PR_NUMBER]):
         print("❌ 필수 환경 변수가 누락되었습니다.")
         return
@@ -79,9 +103,9 @@ def main():
     save_to_file(review, OUTPUT_FILE)
 
     print("📤 PR에 댓글 등록 중...")
-    post_comment(PR_NUMBER, OUTPUT_FILE)
+    post_comment(OUTPUT_FILE)
 
-    print("✅ 완료: 리뷰가 PR에 성공적으로 등록되었습니다.")
+    print("✅ 완료: 리뷰가 PR에 성공적으로 등록되었습니다!!!~~")
 
 if __name__ == "__main__":
     main()
