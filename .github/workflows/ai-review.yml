@@ -12,17 +12,17 @@ jobs:
       - name: Debug Directory
         run: ls -R ${GITHUB_WORKSPACE}
 
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
       - name: 🔍 Check for review_prompt_template.txt
         run: |
           if [ ! -f "${GITHUB_WORKSPACE}/.github/scripts/review_prompt_template.txt" ]; then
             echo "❌ review_prompt_template.txt is missing!"
             exit 1
           fi
-
-      - name: 📥 Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
 
       - name: 🐍 Set up Python
         uses: actions/setup-python@v4
