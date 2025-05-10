@@ -21,17 +21,9 @@ jobs:
         run: pip install openai requests
 
       - name: 🛠 Install GitHub CLI
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y gh
+        run: sudo apt-get install -y gh
 
-      - name: 🔐 Authenticate GitHub CLI with PAT
-        run: echo "${{ secrets.MY_PAT }}" | gh auth login --with-token
-        env:
-          GITHUB_TOKEN: ""  # ❗ GITHUB_TOKEN 비워야 gh가 PAT 사용
-          MY_PAT: ${{ secrets.MY_PERSONAL_ACCESS_TOKEN }}
-
-      - name: 🤖 Run AI Code Review (no arguments!)
+      - name: 🤖 Run AI Code Review
         run: python .github/scripts/review.py
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
@@ -39,3 +31,4 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
           PROMPT_TEMPLATE_FILE: .github/scripts/review_prompt_template.txt
+          GH_TOKEN: ${{ secrets.MY_PAT }}  # GitHub CLI 인증용
