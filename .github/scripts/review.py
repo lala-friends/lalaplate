@@ -56,7 +56,17 @@ def save_to_file(content, filename):
 
 # PR 코멘트 등록
 def post_comment(pr_number, filename):
-    subprocess.run(["gh", "pr", "comment", str(pr_number), "-F", filename], check=True)
+    try:
+        if not pr_number:
+            raise ValueError("PR_NUMBER is not set or invalid.")
+        print(f"Running command: gh pr comment {pr_number} -F {filename}")
+        subprocess.run(["gh", "pr", "comment", str(pr_number), "-F", filename], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"❌ Failed to post comment: {e}")
+        raise
+    except ValueError as e:
+        print(f"❌ {e}")
+        raise
 
 def main():
     if not all([OPENAI_API_KEY, GITHUB_TOKEN, GITHUB_REPOSITORY, PR_NUMBER]):
