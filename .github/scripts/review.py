@@ -26,6 +26,7 @@ def get_pr_info(repo, pr_number, token):
 # 코드 변경사항(diff) 가져오기
 def get_diff():
     try:
+        subprocess.run(["git", "fetch", "origin", "main"], check=True)
         return subprocess.check_output(["git", "diff", "origin/main...HEAD"], text=True)
     except subprocess.CalledProcessError:
         print("❌ Unable to fetch diff with 'origin/main'. Ensure the 'main' branch exists and is up to date.")
