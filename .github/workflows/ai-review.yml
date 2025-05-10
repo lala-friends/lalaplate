@@ -9,11 +9,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Debug Directory
+        run: ls -R ${GITHUB_WORKSPACE}
+
       - name: 📥 Checkout repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          ref: main
 
       - name: 🐍 Set up Python
         uses: actions/setup-python@v4
@@ -27,11 +29,11 @@ jobs:
         run: sudo apt-get install -y gh
 
       - name: 🤖 Run AI Code Review
-        run: python .github/scripts/review.py
+        run: python ${GITHUB_WORKSPACE}/.github/scripts/review.py
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
-          PROMPT_TEMPLATE_FILE: .github/scripts/review_prompt_template.txt
+          PROMPT_TEMPLATE_FILE: ${GITHUB_WORKSPACE}/.github/scripts/review_prompt_template.txt
           GH_TOKEN: ${{ secrets.MY_PAT }}
