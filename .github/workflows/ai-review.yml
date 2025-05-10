@@ -26,9 +26,7 @@ jobs:
           sudo apt-get install -y gh
 
       - name: 🔐 GitHub CLI 인증
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh auth login --with-token "${{ secrets.GITHUB_TOKEN }}"
 
       - name: 🤖 GPT 기반 코드 리뷰 실행
         run: python .github/scripts/review.py
