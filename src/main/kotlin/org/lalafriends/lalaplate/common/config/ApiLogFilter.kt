@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServletResponse
 import org.lalafriends.lalaplate.common.Jackson
 import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType
-import org.springframework.stereotype.Component
 import org.springframework.util.AntPathMatcher
 import org.springframework.web.filter.OncePerRequestFilter
 import org.springframework.web.util.ContentCachingRequestWrapper
@@ -14,7 +13,6 @@ import org.springframework.web.util.ContentCachingResponseWrapper
 import java.io.IOException
 import java.nio.charset.StandardCharsets
 
-@Component
 class ApiLogFilter : OncePerRequestFilter() {
     private val objectMapper = Jackson.mapper()
     private val maxPayloadLength = 10000

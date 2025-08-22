@@ -15,7 +15,7 @@ class PaymentClientConfig(
         return if (env.useDummy) {
             PaymentDummyClient()
         } else {
-            PaymentStableClient(env, RestClientUtil.new(env))
+            PaymentStableClient(env, RestClientUtil.from(env))
         }
     }
 }
