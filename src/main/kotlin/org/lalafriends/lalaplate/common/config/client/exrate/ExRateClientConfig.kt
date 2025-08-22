@@ -15,7 +15,7 @@ class ExRateClientConfig(
         return if (env.useDummy) {
             ExRateDummyClient()
         } else {
-            ExRateStableClient(env, RestClientUtil.new(env))
+            ExRateStableClient(env, RestClientUtil.from(env))
         }
     }
 }
